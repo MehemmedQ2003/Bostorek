@@ -1,0 +1,63 @@
+<template>
+    <div class="card border-0 shadow position-relative">
+        <!-- <img :src="book.image" class="card-img-top" alt="..."> -->
+        <img src="../../public/images/akaid-dersleri.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <div class="auth-box">
+                <span style="background-color: var(--primary-color);" class="py-1 px-3 text-white rounded-pill">
+                    {{ book.author }}
+                </span>
+            </div>
+            <h5 class="card-title mt-3 fw-semibold">{{ truncatedName }}</h5>
+            <p class="card-text ">{{ truncatedText }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="card-link">Read More</a>
+                <p class="badge py-1 px-2 text-white mb-0" style="background-color: var(--primary-color);">{{ book.date }}</p>
+            </div>
+        </div>
+        <span
+            :class="ratingBadgeClass"
+        class="position-absolute rounded-circle p-2 top-0 start-100 translate-middle text-light border border-2 border-light">{{ book.rating }}</span>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'BookItem',
+        props: {
+            book: {
+                type: Object,
+                default: () => ({}),
+            }
+        },
+        computed: {
+            ratingBadgeClass(){
+                if(this.book.rating > 7){
+                    return 'bg-success';
+                } else if(this.book.rating > 4){
+                    return 'bg-warning text-dark';
+                } else {
+                    return 'bg-danger';
+                }
+            },
+            truncatedName(){
+                if(this.book.name.length > 20){
+                    return this.book.name.slice(0, 20) + '...';
+                }
+                return this.book.name;
+            },
+            truncatedText(){
+                if(this.book.description.length > 80){
+                    return this.book.description.slice(0, 80) + '...';
+                }
+                return this.book.description;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    .card-text{
+        min-height: 70px;
+    }
+</style>
